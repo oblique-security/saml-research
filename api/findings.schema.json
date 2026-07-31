@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Findings are end-to-end breakages of a SAML package.",
+  "description": "",
+  "type": "object",
+  "required": ["id", "title", "status", "createdAt", "updatedAt"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable per-run id, e.g. 'f-0007'."
+    },
+    "title": {
+      "type": "string",
+      "description": "Short description of the finding."
+    },
+    "gadgets": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "gadgets.jsonl ids 'g-0007'"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was inserted"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was last updated"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "conjectured",
+        "confirmed",
+        "refuted",
+        "out-of-scope",
+        "duplicate"
+      ],
+      "description": "The state of this finding"
+    },
+    "statusReason": {
+      "type": "string",
+      "description": "When either 'confirmed', 'refuted', 'out-of-scope' or 'duplicate' this should describe why."
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Links to associated files.",
+      "items": {
+        "type": "object",
+        "required": ["description", "path", "createdAt"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Short description of the artifact"
+          },
+          "path": {
+            "type": "string",
+            "description": "Path to the artifact. Either a file or directory"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this artifact was created"
+          }
+        }
+      }
+    }
+  }
+}

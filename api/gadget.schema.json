@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XML/library behavior gadget",
+  "description": "A gadget is one small, reproducible behavior of a surface site under weird input — e.g. 'this xpath id() lookup returns the first match on duplicate IDs'.",
+  "type": "object",
+  "required": ["id", "title", "status", "createdAt", "updatedAt"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable per-run id, e.g. 'g-0007'."
+    },
+    "title": {
+      "type": "string",
+      "description": "Short description of the gadget."
+    },
+    "impacts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional surface.jsonl site id(s) this gadget affects."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was inserted"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was last updated"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["conjectured", "confirmed", "refuted"],
+      "description": "Gadgets start in a 'conjectured' state and then progress to confirmed or refuted"
+    },
+    "statusReason": {
+      "type": "string",
+      "description": "When either 'confirmed' or 'refuted', this should describe why they're in this state"
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Links to associated files.",
+      "items": {
+        "type": "object",
+        "required": ["description", "path", "createdAt"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "description": "Short description of the artifact"
+          },
+          "path": {
+            "type": "string",
+            "description": "Path to the artifact. Either a file or directory"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this artifact was created"
+          }
+        }
+      }
+    }
+  }
+}

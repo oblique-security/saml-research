@@ -59,7 +59,8 @@ The following steps should be run in order using sub-agents.
     would help bridge the end-to-end gap.
   - Finding eval - Using a sub-agent, look through all existing findings and
     deduplicate or mark out-of-scope any conjectured findings that go against
-    this repo's scope and guidance.
+    this repo's scope and guidance. This should make a decision based on the
+    description of the finding. It should not read source code.
   - Finding prove - For each finding in a "conjectured" state, spin up a
     sub-agent to attempt to prove or disprove it. This should generate an
     artifact. If specific gadgets do or don't work, update their status.

@@ -18,6 +18,10 @@
       "items": { "type": "string" },
       "description": "gadgets.jsonl ids 'g-0007'"
     },
+    "description": {
+      "type": "string",
+      "description": "A longer description of the finding and an articulation of how it can be exploited. This will be used to determine if the finding is in-scope or a duplicate of another finding."
+    },
     "createdAt": {
       "type": "string",
       "format": "date-time",

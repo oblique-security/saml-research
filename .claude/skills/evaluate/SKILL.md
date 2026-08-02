@@ -37,6 +37,12 @@ feel its appropriate.
 
 The following steps should be run in order using sub-agents.
 
+If a library utilizes a system libraries or dependencies that deserves their own
+deep analysis (such as libxml2, xml-crypto, xml-encryption) vendor their source
+separately under their own `./investigate` directory, or reuse an existing one.
+The analyze and gadget steps should run independently in parallel for each
+library. The findings should combine them all.
+
 - Vendor - Using a sub-agent copy the source code of the project into an
   `./investigate` directory. For the slug, "github.com/foo-bar/spam" should
   become "./investigate/github-com-foo-bar-spam/vendor". Include dependencies.

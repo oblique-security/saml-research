@@ -33,6 +33,12 @@ instructions for attack surface are defined under `./knowledge`. Let the
 sub-agents know these files exist so they can load them into context if they
 feel its appropriate.
 
+## Rules
+
+If an agent ever needs input on a protocol level question, such as how realistic
+or critical a spec deviation is, it should NEVER research itself. Always ask the
+user.
+
 ## Steps
 
 The following steps should be run in order using sub-agents.

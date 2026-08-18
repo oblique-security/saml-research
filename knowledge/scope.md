@@ -23,6 +23,8 @@ protocol).
   provide certificates, then the signature isn't checked."
 - Lack of signature checks. If a library doesn't implement LogoutRequest
   signature validation, don't report this as a finding.
+- Lack of value checks. If a library doesn't attempt to check a Destination
+  value, then supplying a bad one isn't interesting.
 - IdPs providing weird values within signed elements. Never investigate "what if
   a valid user were to set a weird unicode value in their email." Always assume
   that the IdP sanitizes values. Though an attacker modifying a signed attribute

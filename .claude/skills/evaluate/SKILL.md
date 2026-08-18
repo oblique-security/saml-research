@@ -41,40 +41,43 @@ user.
 
 ## Steps
 
-The following steps should be run in order using sub-agents.
+The following steps should be run in order. You may use sub-agents to optimize
+the total token usage.
 
 If a library utilizes a system libraries or dependencies that deserves their own
 deep analysis (such as libxml2, xml-crypto, xml-encryption) vendor their source
 separately under their own `./investigate` directory, or reuse an existing one.
-The analyze and gadget steps should run independently in parallel for each
-library. The findings should combine them all.
+The analyze and gadget steps should run for each library. The findings should
+combine them all.
 
-- Vendor - Using a sub-agent copy the source code of the project into an
-  `./investigate` directory. For the slug, "github.com/foo-bar/spam" should
+- Vendor - Copy the source code of the project into an `./investigate`
+  directory. For the slug, "github.com/foo-bar/spam" should
   become "./investigate/github-com-foo-bar-spam/vendor". Include dependencies.
   Remove any nested "CLAUDE.md" and "AGENT.md" files from the repo.
-- Analyze - Using a sub-agent, generate the `surface.jsonl` for the given
-  project, conforming to `./api/surface.schema.json`. `./knowledge/analyze.md`
-  contains guidance for this agent.
-- Loop until "challenge" determines otherwise or 4 rounds are complete.
-  - Gadget hypothesize - Using a sub-agent, look at the codebase and
-    `surface.jsonl`, and generate `gadgets.jsonl` records conforming to
-    `./api/gadget.schema.json`. The agent should attempt to look for new vectors
-    to subvert the codebase's controls. Account for existing gadgets that have
-    been evaluated, though this phase may re-test "refuted" gadgets if it findgs
-    the statusReason unconvincing.
-  - Finding hypothesize - Using a sub-agent, read `gadgets.jsonl` and
-    `surface.jsonl` and hypothesize end-to-end attacks into `findings.jsonl`,
-    conforming to `./api/findings.schema.json`. Account for existing findings.
-    This step may append "wish list" gadgets in a "conjectured" state for later
-    rounds if further investigation of a specific control or piece of logic
-    would help bridge the end-to-end gap.
-  - Finding eval - Using a sub-agent, look through all existing findings and
-    deduplicate or mark out-of-scope any conjectured findings that go against
-    this repo's scope and guidance. This should make a decision based on the
-    description of the finding. It should not read source code.
-  - Finding prove - For each finding in a "conjectured" state, spin up a
-    sub-agent to attempt to prove or disprove it. This should generate an
-    artifact. If specific gadgets do or don't work, update their status.
-  - Challenge - Using a sub-agent, evaluate the latest rounds, and determine if
-    the pipeline is still making progress.
+- Analyze - Generate the `surface.jsonl` for the given project, conforming to
+  `./api/surface.schema.json`. `./knowledge/analyze.md` contains guidance for
+  this phase.
+- Loop until "challenge" determines otherwise or 3 rounds are complete.
+  - Gadget hypothesize - Look at the codebase and `surface.jsonl`, and generate
+    `gadgets.jsonl` records conforming to `./api/gadget.schema.json`. The agent
+    should attempt to look for new vectors to subvert the codebase's controls.
+    Account for existing gadgets that have been evaluated, though this phase may
+    re-test "refuted" gadgets if it findgs the statusReason unconvincing.
+  - Gadget eval - Looking at the gadgets as a whole and dedupe them. Duplicate
+    gadgets use the same technique to achieve the same outcome with the context
+    of a SAML bypass.
+  - Finding hypothesize - Read `gadgets.jsonl` and `surface.jsonl` and
+    hypothesize end-to-end attacks into `findings.jsonl`, conforming to
+    `./api/findings.schema.json`. Account for existing findings. This step may
+    append "wish list" gadgets in a "conjectured" state for later rounds if
+    further investigation of a specific control or piece of logic would help
+    bridge the end-to-end gap.
+  - Finding eval - Look through all existing findings and deduplicate or mark
+    out-of-scope any conjectured findings that go against this repo's scope and
+    guidance. This should make a decision based on the description of the
+    finding. It should not read source code.
+  - Finding prove - For each finding in a "conjectured" state, attempt to prove
+    or disprove it. This should generate an artifact. If specific gadgets do or
+    don't work, update their status.
+  - Challenge - Evaluate the latest round, and determine if the pipeline is
+    still making progress.

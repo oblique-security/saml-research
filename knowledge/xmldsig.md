@@ -103,3 +103,4 @@ More advanced techniques include:
   clever.
 - Using different canonicalization methods to insert comments or external
   namespace references.
+- Confusion when combining signature validation with encrypted assertions.

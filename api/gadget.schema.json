@@ -30,12 +30,12 @@
     },
     "status": {
       "type": "string",
-      "enum": ["conjectured", "confirmed", "refuted"],
+      "enum": ["conjectured", "confirmed", "refuted", "duplicate"],
       "description": "Gadgets start in a 'conjectured' state and then progress to confirmed or refuted"
     },
     "statusReason": {
       "type": "string",
-      "description": "When either 'confirmed' or 'refuted', this should describe why they're in this state"
+      "description": "When either 'confirmed', 'refuted', or 'duplicate' this should describe why they're in this state"
     },
     "artifacts": {
       "type": "array",
